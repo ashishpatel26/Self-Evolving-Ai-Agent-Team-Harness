@@ -1,0 +1,26 @@
+[project]
+name = "evolving-agent-team"
+version = "0.1.0"
+description = "Self-evolving agent team (Berkeley 'Evolving Agent Teams') built on Agno"
+requires-python = ">=3.11"
+dependencies = [
+    "agno[scheduler]",
+    "python-multipart",
+    "mcp",
+    "fastmcp>=4,<5",
+    "pydantic",
+    "sqlalchemy[asyncio]",
+    "aiosqlite",
+    "lancedb",
+    "pyarrow",
+    "ollama",
+    "openai",  # imported by agno.models.ollama, not used as a provider
+    "fastapi",
+    "uvicorn",
+    "opentelemetry-sdk",
+    "opentelemetry-exporter-otlp-proto-http",
+    "openinference-instrumentation-agno",
+]
+
+[tool.ruff]
+line-length = 130

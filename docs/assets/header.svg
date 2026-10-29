@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Evolving Support Team: a self-evolving multi-agent team">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07070d"/>
+      <stop offset="1" stop-color="#0d0b1f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <radialGradient id="glowV" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#8b5cf6" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowC" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity="0.045"/>
+    </pattern>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <path id="e1" d="M640 200 C 680 200, 690 130, 735 130"/>
+    <path id="e2" d="M640 200 L 735 200"/>
+    <path id="e3" d="M640 200 C 680 200, 690 270, 735 270"/>
+    <path id="e4" d="M805 130 C 850 130, 860 200, 900 200"/>
+    <path id="e5" d="M805 200 L 900 200"/>
+    <path id="e6" d="M805 270 C 850 270, 860 200, 900 200"/>
+    <path id="e0" d="M510 200 L 570 200"/>
+    <path id="loop" d="M1040 200 C 1040 360, 540 360, 540 250"/>
+  </defs>
+
+  <style>
+    .title { font: 800 54px 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif; fill: #f5f5ff; letter-spacing: -1.5px; }
+    .sub   { font: 400 19px 'Segoe UI', 'Inter', system-ui, sans-serif; fill: #a1a1c2; }
+    .tag   { font: 600 12px 'Segoe UI', 'Inter', system-ui, sans-serif; fill: #c4b5fd; letter-spacing: 2px; }
+    .lbl   { font: 600 11px 'Segoe UI', 'Inter', system-ui, sans-serif; fill: #e5e7ff; text-anchor: middle; }
+    .mono  { font: 600 13px ui-monospace, 'Cascadia Code', Consolas, monospace; fill: #67e8f9; }
+    .edge  { fill: none; stroke: #8b5cf6; stroke-opacity: 0.35; stroke-width: 1.6; }
+    .dash  { fill: none; stroke: url(#accent); stroke-width: 1.6; stroke-dasharray: 4 8; animation: flow 1.6s linear infinite; }
+    .node  { fill: #13112a; stroke: #8b5cf6; stroke-width: 1.5; }
+    .pulse { animation: pulse 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    .born  { opacity: 0; animation: born 12s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    .born2 { animation-delay: 3s; }
+    .born3 { animation-delay: 6s; }
+    .blob  { animation: drift 14s ease-in-out infinite alternate; }
+    .blob2 { animation: drift 18s ease-in-out infinite alternate-reverse; }
+    .ver   { opacity: 0; animation: ver 12s steps(1) infinite; }
+    .bar   { animation: bar 12s ease-in-out infinite; transform-origin: 0 0; }
+    .ring  { fill: none; stroke: url(#accent); stroke-width: 2; stroke-dasharray: 60 600; animation: spin 6s linear infinite; transform-origin: 1040px 200px; }
+    @keyframes flow  { to { stroke-dashoffset: -24; } }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: .9 } 50% { transform: scale(1.12); opacity: 1 } }
+    @keyframes born  { 0%,22% { opacity: 0; transform: scale(.4) } 30%,92% { opacity: 1; transform: scale(1) } 100% { opacity: 0; transform: scale(.4) } }
+    @keyframes drift { from { transform: translate(0,0) } to { transform: translate(60px,-30px) } }
+    @keyframes spin  { to { transform: rotate(360deg) } }
+    @keyframes bar   { 0% { transform: scaleX(.69) } 25% { transform: scaleX(.79) } 50% { transform: scaleX(.87) } 75%,92% { transform: scaleX(1) } 100% { transform: scaleX(.69) } }
+    @keyframes ver   { 0% { opacity: 1 } 25%,100% { opacity: 0 } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .born, .ver { opacity: 1; } }
+  </style>
+
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  <rect width="1200" height="400" fill="url(#grid)"/>
+  <circle class="blob"  cx="760" cy="120" r="240" fill="url(#glowV)"/>
+  <circle class="blob2" cx="1040" cy="300" r="200" fill="url(#glowC)"/>
+
+  <!-- left: copy -->
+  <text x="60" y="92" class="tag">AGNO · OLLAMA · QWEN · LIVE PORTAL</text>
+  <text x="58" y="160" class="title">Evolving</text>
+  <text x="58" y="220" class="title" fill="url(#accent)" style="fill:url(#accent)">Support Team</text>
+  <text x="60" y="262" class="sub">A self-evolving multi-agent team that diagnoses</text>
+  <text x="60" y="288" class="sub">its failures, invents roles and rebuilds itself.</text>
+
+  <!-- score meter -->
+  <text x="60" y="335" class="mono">team</text>
+  <g font-family="ui-monospace, Consolas, monospace" font-weight="700" font-size="13" fill="#67e8f9">
+    <text x="104" y="335" class="ver" style="animation-delay:0s">v1</text>
+    <text x="104" y="335" class="ver" style="animation-delay:3s">v2</text>
+    <text x="104" y="335" class="ver" style="animation-delay:6s">v3</text>
+    <text x="104" y="335" class="ver" style="animation-delay:9s">v4</text>
+  </g>
+  <rect x="140" y="325" width="260" height="12" rx="6" fill="#ffffff" fill-opacity="0.07"/>
+  <rect x="140" y="325" width="260" height="12" rx="6" fill="url(#accent)" class="bar"/>
+  <text x="412" y="335" class="mono" fill="#a1a1c2" style="fill:#a1a1c2">score</text>
+
+  <!-- right: live agent pipeline -->
+  <use href="#e0" class="edge"/><use href="#e0" class="dash"/>
+  <use href="#e1" class="edge"/><use href="#e1" class="dash"/>
+  <use href="#e2" class="edge"/><use href="#e2" class="dash"/>
+  <use href="#e3" class="edge"/><use href="#e3" class="dash"/>
+  <use href="#e4" class="edge"/><use href="#e4" class="dash"/>
+  <use href="#e5" class="edge"/><use href="#e5" class="dash"/>
+  <use href="#e6" class="edge"/><use href="#e6" class="dash"/>
+  <use href="#loop" class="edge" stroke-dasharray="3 6"/>
+
+  <!-- particles travelling the hand-offs -->
+  <g fill="#22d3ee">
+    <circle r="3.5" filter="url(#soft)"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#e1"/></animateMotion></circle>
+    <circle r="3.5" filter="url(#soft)"><animateMotion dur="2.4s" begin="0.8s" repeatCount="indefinite"><mpath href="#e2"/></animateMotion></circle>
+    <circle r="3.5" filter="url(#soft)"><animateMotion dur="2.4s" begin="1.6s" repeatCount="indefinite"><mpath href="#e3"/></animateMotion></circle>
+    <circle r="3.5" filter="url(#soft)"><animateMotion dur="2.4s" begin="0.4s" repeatCount="indefinite"><mpath href="#e4"/></animateMotion></circle>
+    <circle r="3.5" filter="url(#soft)"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite"><mpath href="#e5"/></animateMotion></circle>
+    <circle r="3.5" filter="url(#soft)"><animateMotion dur="2.4s" begin="2.0s" repeatCount="indefinite"><mpath href="#e6"/></animateMotion></circle>
+    <circle r="3" fill="#a78bfa"><animateMotion dur="1.2s" repeatCount="indefinite"><mpath href="#e0"/></animateMotion></circle>
+    <circle r="4" fill="#a78bfa" filter="url(#soft)"><animateMotion dur="4s" repeatCount="indefinite"><mpath href="#loop"/></animateMotion></circle>
+  </g>
+
+  <!-- ticket -->
+  <g>
+    <rect x="470" y="180" width="40" height="40" rx="10" class="node" stroke="#22d3ee"/>
+    <text x="490" y="205" class="lbl" font-size="16">🎫</text>
+    <text x="490" y="240" class="lbl" fill="#a1a1c2" style="fill:#a1a1c2">ticket</text>
+  </g>
+  <!-- planner -->
+  <g>
+    <circle cx="605" cy="200" r="34" fill="url(#glowV)" class="pulse"/>
+    <circle cx="605" cy="200" r="24" class="node"/>
+    <text x="605" y="205" class="lbl" font-size="15">🧭</text>
+    <text x="605" y="244" class="lbl">Planner</text>
+  </g>
+  <!-- parallel stage: responder always, invented roles appear over time -->
+  <g>
+    <circle cx="770" cy="200" r="24" class="node"/>
+    <text x="770" y="205" class="lbl" font-size="15">📖</text>
+    <text x="770" y="244" class="lbl">Responder</text>
+  </g>
+  <g class="born">
+    <circle cx="770" cy="130" r="24" class="node" stroke="#22d3ee"/>
+    <text x="770" y="135" class="lbl" font-size="15">✂️</text>
+    <text x="770" y="100" class="lbl" fill="#67e8f9" style="fill:#67e8f9">+ Issue Splitter</text>
+  </g>
+  <g class="born born2">
+    <circle cx="770" cy="270" r="24" class="node" stroke="#22d3ee"/>
+    <text x="770" y="275" class="lbl" font-size="15">📦</text>
+    <text x="770" y="314" class="lbl" fill="#67e8f9" style="fill:#67e8f9">+ Order Investigator</text>
+  </g>
+  <!-- critic -->
+  <g>
+    <circle cx="935" cy="200" r="34" fill="url(#glowC)" class="pulse" style="animation-delay:1.5s"/>
+    <circle cx="935" cy="200" r="24" class="node"/>
+    <text x="935" y="205" class="lbl" font-size="15">✍️</text>
+    <text x="935" y="244" class="lbl">Critic</text>
+  </g>
+  <!-- supervisor -->
+  <g>
+    <circle cx="1040" cy="200" r="44" fill="url(#glowV)" class="pulse" style="animation-delay:.7s"/>
+    <circle cx="1040" cy="200" r="38" class="ring"/>
+    <circle cx="1040" cy="200" r="30" class="node" stroke-width="2"/>
+    <text x="1040" y="207" class="lbl" font-size="20">🧬</text>
+    <text x="1040" y="256" class="lbl">Supervisor</text>
+    <text x="1040" y="272" class="lbl" fill="#a1a1c2" style="fill:#a1a1c2" font-weight="400">reflect · diagnose · redesign</text>
+  </g>
+  <line x1="969" y1="200" x2="1002" y2="200" class="dash"/>
+  <text x="790" y="356" class="lbl" fill="#8b8bb0" style="fill:#8b8bb0" font-weight="400">adopt v(N+1) · lessons → LEARNINGS.md</text>
+</svg>
