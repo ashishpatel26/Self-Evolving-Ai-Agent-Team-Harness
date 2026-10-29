@@ -34,7 +34,7 @@ def best_within(curve, budget):
 
 
 async def main(approve: str, versions: int):
-    (RUNS / "demo.db").unlink(missing_ok=True)  # fresh run: K lives in this database
+    (RUNS / f"demo{'-offline' if OFFLINE else ''}.db").unlink(missing_ok=True)  # fresh run: K lives in this database
     for stale in (RUNS / "lancedb").glob("lessons_demo*"):  # and so do the Reflector's learned lessons
         shutil.rmtree(stale, ignore_errors=True)
     db, kb = get_db("demo"), get_knowledge()

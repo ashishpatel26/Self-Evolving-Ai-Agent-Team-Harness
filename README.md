@@ -17,9 +17,23 @@ Built only on the [Agno](https://docs.agno.com) SDK · runs 100% locally on Olla
 
 *After "Evolving Agent Teams" (Cao, Mao, Li, Gonzalez, Stoica, UC Berkeley, arXiv 2610.36848)*
 
-[Quick start](#-quick-start) · [Architecture](#-architecture) · [Live portal](#-live-portal) · [Results](#-results) · [Docs](docs/)
+[Demo](#-demo) · [Quick start](#-quick-start) · [Architecture](#-architecture) · [Tech stack](#-tech-stack) · [Paper](#-paper-reference) · [Live portal](#-live-portal) · [Results](#-results) · [Docs](docs/)
 
 </div>
+
+---
+
+## 🎬 Demo
+
+<div align="center">
+
+<img src="docs/assets/demo.gif" alt="Portal demo: a ticket solved live by the agent pipeline, a prompt injection blocked, an evolution run with human approval in the UI, team history and learnings" width="100%"/>
+
+<sub>2× speed. Full-quality video: <a href="docs/assets/demo.mp4">docs/assets/demo.mp4</a> (2 min). Recorded with the offline simulator so the run is fast and repeatable; with real Qwen each ticket takes about a minute.</sub>
+
+</div>
+
+**What you see:** a shipping ticket (T2) flowing Ticket → Planner → Responder → Critic with live tool calls → the prompt-injection ticket (T7) blocked by the guardrail → a fresh evolution run where the supervisor scores, reflects, diagnoses, proposes a new team and waits for **Approve & launch** in the UI → Team History and Knowledge.
 
 ---
 
@@ -148,6 +162,23 @@ flowchart TB
 
 ---
 
+## 🧰 Tech stack
+
+| Layer | Stack | What it does here |
+|---|---|---|
+| 🖥 **Frontend** | ![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs) ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black) ![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?logo=framer&logoColor=white) ![Lucide](https://img.shields.io/badge/Lucide-icons-F56565) ![JavaScript](https://img.shields.io/badge/JavaScript-ES2023-F7DF1E?logo=javascript&logoColor=black) | App Router console, animated agent graph, SSE `EventSource` client, hand-rolled SVG charts and markdown, server-side API proxy that holds the bearer key |
+| ⚙ **API · runtime** | ![AgentOS](https://img.shields.io/badge/Agno-AgentOS-FF6B35) ![FastAPI](https://img.shields.io/badge/FastAPI-0.162-009688?logo=fastapi&logoColor=white) ![Uvicorn](https://img.shields.io/badge/Uvicorn-0.54-499848) ![SSE](https://img.shields.io/badge/Server--Sent_Events-live-22D3EE) | REST + streaming + background runs, bearer auth, `ScheduleManager` cron, portal API `/ui/*`, in-process event bus |
+| 🧬 **Agent core** | ![Agno](https://img.shields.io/badge/Agno_SDK-3.1.11-FF6B35) ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white) ![Pydantic](https://img.shields.io/badge/Pydantic-2.14-E92063?logo=pydantic&logoColor=white) | `Agent`, `Team` (broadcast), `Workflow` (Loop · Parallel · Condition), `ReasoningTools`, `LearningMachine`, guardrails, pre/post + tool hooks, memory, session summaries, context compression, structured IO |
+| ✅ **Evaluation** | ![Agno Evals](https://img.shields.io/badge/Agno-Evals-FF6B35) | custom harness (category + fact coverage, failure tags, plateau detection) + Agno `AccuracyEval`, `AgentAsJudgeEval`, `ReliabilityEval` |
+| 🦙 **Models** | ![Ollama](https://img.shields.io/badge/Ollama-local-000000?logo=ollama) ![Qwen](https://img.shields.io/badge/Qwen-3.5_4B-615CED) ![Gemma](https://img.shields.io/badge/Gemma_2-9B_fallback-4285F4?logo=google&logoColor=white) ![nomic](https://img.shields.io/badge/nomic--embed--text-768d-8B5CF6) | all inference local: Qwen primary, Gemma 2 fallback, one embedder for policies and lessons |
+| 🧭 **Vector DB · RAG** | ![LanceDB](https://img.shields.io/badge/LanceDB-0.40-CF3CFF) ![Agno Knowledge](https://img.shields.io/badge/Agno-Knowledge-FF6B35) | policy documents (`data/policies`) and the Reflector's learned lessons, searched with `search_knowledge_base` |
+| 🗄 **Database · state** | ![SQLite](https://img.shields.io/badge/SQLite-aiosqlite-003B57?logo=sqlite&logoColor=white) ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.1-D71F00) ![Agno FS](https://img.shields.io/badge/agno.fs-FileSystem-FF6B35) | sessions, user memories, workflow state, evals, traces, schedules; persistent file system K (`LEARNINGS.md`, `EVOLUTION.md`, `teams/vN/*`) |
+| 🔌 **Tools** | ![MCP](https://img.shields.io/badge/MCP-2.3-000000) ![FastMCP](https://img.shields.io/badge/FastMCP-4.1-7C3AED) | custom stdio MCP server (`lookup_order`) wired in with Agno `MCPTools` |
+| 🔭 **Observability** | ![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-1.45-425CC7?logo=opentelemetry&logoColor=white) ![OpenInference](https://img.shields.io/badge/OpenInference-Agno-FF6B35) ![Langfuse](https://img.shields.io/badge/Langfuse-OTLP-0A60FF) | every agent, step, model and tool call as a span → Agno DB + Langfuse |
+| 📦 **Tooling** | ![uv](https://img.shields.io/badge/uv-env_%2B_lock-DE5FE9) ![npm](https://img.shields.io/badge/npm-11-CB3837?logo=npm&logoColor=white) ![Playwright](https://img.shields.io/badge/Playwright-GIF_export-2EAD33?logo=playwright&logoColor=white) | reproducible Python env (`uv.lock`), portal build, SVG → GIF export of the animated diagrams |
+
+---
+
 ## 🚀 Quick start
 
 ```bash
@@ -270,3 +301,27 @@ Set `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY` and `LANGFUSE_HOST` (e.g. `http
 - One supervisor run per namespace at a time; keep `EAT_CHECK_CRON` longer than a full run.
 - The Reflector learns from the scored tickets (no held-out split), so scores are in-sample.
 - The portal event stream is in-memory: a server restart clears the live feed (history stays in the DB).
+
+---
+
+## 📄 Paper reference
+
+This project implements the architecture of:
+
+> **Evolving Agent Teams**
+> Cao, Mao, Li, Gonzalez, Stoica · UC Berkeley · arXiv:2610.36848
+> [Read the paper (PDF)](https://www.alphaxiv.org/pdf/2610.36848) · [arXiv](https://arxiv.org/abs/2610.36848)
+
+What we take from it: a team is **T = (Roles, Coordination, Knowledge)**; a supervisor monitors the team, reflects on failures, diagnoses local optima and **restructures the team** (new roles, new coordination) instead of only tuning prompts; a **persistent file system** (learnings, evolution history, per-team artifacts) carries knowledge across team versions; improvement is judged against **fixed teams at a matched token budget**. See [Paper → implementation](#paper--implementation) for the exact mapping.
+
+```bibtex
+@article{cao2026evolvingagentteams,
+  title   = {Evolving Agent Teams},
+  author  = {Cao and Mao and Li and Gonzalez and Stoica},
+  journal = {arXiv preprint arXiv:2610.36848},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2610.36848}
+}
+```
+
+This repository is an independent implementation for learning and experimentation, not the authors' code.

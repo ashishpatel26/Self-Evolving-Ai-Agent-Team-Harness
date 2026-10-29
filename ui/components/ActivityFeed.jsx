@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronRight, Flag, Layers, Loader2, Play, ShieldAlert, Sparkles, TriangleAlert, Check, X } from 'lucide-react';
 import { pct, pretty, preview, timeAgo, toolMeta } from '@/lib/format';
+import Markdown from './Markdown';
 
 function Row({ icon: Icon, tone = 'slate', title, sub, right, children, ts }) {
   const [open, setOpen] = useState(false);
@@ -86,7 +87,7 @@ function Item({ ev }) {
           title={`Stage ${ev.stage + 1} ${ev.ok ? 'handed off' : 'failed'}`}
           sub={`${ev.roles?.join(', ')} · ${ev.tokens ?? 0} tok · ${preview(ev.output, 80)}`}
         >
-          <pre>{pretty(ev.output)}</pre>
+          {typeof ev.output === 'string' ? <Markdown className="md-sm">{ev.output}</Markdown> : <pre>{pretty(ev.output)}</pre>}
         </Row>
       );
     case 'guardrail':

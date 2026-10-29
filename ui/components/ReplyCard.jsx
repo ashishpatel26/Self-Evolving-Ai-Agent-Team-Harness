@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MailCheck, ShieldAlert, ShieldCheck, TriangleAlert } from 'lucide-react';
 import { ScoreRing, TagPill } from './ui';
+import Markdown from './Markdown';
 
 function Shield({ detail }) {
   return (
@@ -62,7 +63,7 @@ export default function ReplyCard({ run }) {
                     ))}
                   </ul>
                 )}
-                <div className="reply-text">{reply.reply}</div>
+                <Markdown className="reply-text">{reply.reply}</Markdown>
               </div>
               {scored && (
                 <motion.div className="reply-score" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>

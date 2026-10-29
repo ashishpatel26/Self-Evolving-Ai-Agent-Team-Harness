@@ -50,7 +50,7 @@ def get_embedder():
 
 def get_db(name: str = "eat") -> SqliteDb:
     RUNS.mkdir(exist_ok=True)
-    return SqliteDb(db_file=str(RUNS / f"{name}.db"))
+    return SqliteDb(db_file=str(RUNS / f"{name}{'-offline' if OFFLINE else ''}.db"))  # simulator runs never mix with real-model history
 
 
 def get_knowledge() -> Knowledge:
